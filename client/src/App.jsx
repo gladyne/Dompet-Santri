@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Banner from "./components/Banner";
-import { Container } from "@mui/material";
-import DataTable from "./components/DataTable";
 import axios from "axios";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import Home from "./router/Home";
+import Details from "./router/Details";
+import Edit from "./router/Edit";
+import TopUp from "./router/TopUp";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -20,13 +23,20 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <Navbar />
       <Banner />
-      <Container>
-        <DataTable users={users} />
-      </Container>
-    </div>
+      <Outlet />
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" exact element={<Home users={users} />} />
+          <Route path="/detail" exact element={<Details />} />
+          <Route path="/edit" exact element={<Edit />} />
+          <Route path="/topup" exact element={<TopUp />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 

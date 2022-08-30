@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Button } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,27 +29,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, instansi, nid, rekening, saldo) {
-  return { name, instansi, nid, rekening, saldo };
-}
-
-const rows = [
-  createData(
-    "Gladyne Berlian Alif Zago",
-    "bina insani",
-    "32435",
-    "34353",
-    20000
-  ),
-  createData(
-    "Abdilah Ali Kurniawan",
-    "bina insani",
-    "0920001",
-    "3434",
-    1000000
-  ),
-];
-
 export default function DataTable(props) {
   return (
     <TableContainer component={Paper}>
@@ -56,10 +36,10 @@ export default function DataTable(props) {
         <TableHead>
           <TableRow>
             <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell align="right">Instansi</StyledTableCell>
-            <StyledTableCell align="right">NID</StyledTableCell>
-            <StyledTableCell align="right">Saldo</StyledTableCell>
-            <StyledTableCell align="right">Action</StyledTableCell>
+            <StyledTableCell align="center">Instansi</StyledTableCell>
+            <StyledTableCell align="center">NID</StyledTableCell>
+            <StyledTableCell align="center">Saldo</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -71,6 +51,20 @@ export default function DataTable(props) {
               <StyledTableCell align="right">{row.pesantren}</StyledTableCell>
               <StyledTableCell align="right">{row.nipd}</StyledTableCell>
               <StyledTableCell align="right">{row.saldo}</StyledTableCell>
+              <StyledTableCell align="right">
+                <Button variant="contained" size="small">
+                  details
+                </Button>
+                <Button variant="contained" size="small">
+                  edit
+                </Button>
+                <Button variant="contained" size="small">
+                  topup
+                </Button>
+                <Button variant="contained" size="small">
+                  delete
+                </Button>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
