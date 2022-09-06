@@ -7,15 +7,16 @@ const productRoutes = require("./routes/POS/products");
 const apisProductRoutes = require("./routes/apis/product");
 const apisUser = require("./routes/apis/user");
 const apiShop = require("./routes/apis/shop");
+const bodyParser = require("body-parser");
 require("./util/db");
 
 const app = express();
 
 app.set("view engine", "ejs");
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(adminRoutes);
 app.use(santriRoutes);
 app.use(productRoutes);

@@ -13,29 +13,32 @@ app.get("/api/transaction", async (req, res) => {
   }
 });
 
-app.post("/api/transaction/:id", async (req, res) => {
+app.post("/api/transaction/", async (req, res) => {
   const data = req.body;
-  const id = req.params.id;
+  const id = data.nipd;
   const dataUser = await Santri.findOne({ nipd: id });
-  const paid = data.amount;
-  const saldo = dataUser.saldo;
-  const total = saldo - paid;
+  if (dataUser === null) res.status(400).json({ Status: "NIPD tidak ada" });
+  else {
+    const paid = data.amount;
+    const saldo = dataUser.saldo;
+    const total = saldo - paid;
 
-  if (total > 0) {
-    dataUser.saldo = total;
-    dataUser.save();
-    await History.create({
-      custName: dataUser.nama,
-      nipd: dataUser.nipd,
-      total: paid,
-    });
-    res.status(201).json({
-      Success: "ok",
-      nama: dataUser.nama,
-      saldoSekarang: dataUser.saldo,
-    });
-  } else {
-    res.status(400).json({ Status: "Saldo tidak mencukupi" });
+    if (total > 0) {
+      dataUser.saldo = total;
+      dataUser.save();
+      await History.create({
+        custName: dataUser.nama,
+        nipd: dataUser.nipd,
+        total: paid,
+      });
+      res.status(201).json({
+        Success: "ok",
+        nama: dataUser.nama,
+        saldoSekarang: dataUser.saldo,
+      });
+    } else {
+      res.status(400).json({ Status: "Saldo tidak mencukupi" });
+    }
   }
 });
 
